@@ -20,7 +20,3 @@ const getCategoryData = async () => {
 getCategoryData()
 
 </script>
-
-<style>
-
-</style>

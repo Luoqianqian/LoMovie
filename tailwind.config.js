@@ -5,9 +5,13 @@ export default {
   	"./index.html",],
   theme: {
     extend: {
+     height: {
+        header: '72px',
+        main: 'calc(100vh - 72px)'
+      },
       boxShadow: {
         'l-white': '-10px 0 10px white',
-        'l-zinc': '-10px 0 10px #18181b',
+        'l-zinc': '-10px 0 10px #18181b'
       },
       colors: {
         main: '#f44c58',
@@ -22,6 +26,12 @@ export default {
         'error-200': '#f3471c',
         'error-300': '#ffffff'
       },
+      backdropBlur: {
+        '4xl': '240px'
+      },
+      variants: {
+        scrollbar: ['dark']
+      }
     },
   },
   plugins: [],
