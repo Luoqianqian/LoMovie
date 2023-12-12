@@ -3,7 +3,7 @@
     <ul class=" overflow-y-scroll flex flex-col gap-2 ">
       <h2>所有分类</h2>
       <li 
-        v-for="(item, index) in categorys" :key="item.id"
+        v-for="(item, index) in categories" :key="item.id"
         @click="$emit('onItemClick', index)"
         class=" active:bg-slate-100 p-1 cursor-default"
       >
@@ -16,16 +16,11 @@
 <script setup>
 
 const props = defineProps({
-  categorys: {
+  categories: {
     type: Array,
     required: true
   }
 })
 // 所有事件手动注册
 defineEmits(['onItemClick'])
-
 </script>
-
-<style>
-
-</style>

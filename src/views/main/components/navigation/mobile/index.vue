@@ -1,12 +1,12 @@
 <template>
-  <div class="sticky left-0 top-0 z-10">
+  <div class="sticky left-0 top-[-1px] z-10 bg-zinc-100 dark:bg-zinc-900">
     <ul 
       class=" relative text-zinc-600 flex text-xs p-2 items-center overflow-x-auto overflow-hidden last:mr-6"
       ref="ulTarget"
     >
       <!-- category item -->
       <li 
-        v-for="(item, index) in data"
+        v-for="(item, index) in $store.getters.getCategories"
         :key="item.id"
         @click="onItemClick(index)"
         class=" shrink-0 px-2.5 py-1 z-10 "
@@ -17,7 +17,7 @@
       </li>
       <!-- 汉堡按钮 -->
       <li 
-        class=" fixed z-20 right-1 top-2.5 flex items-center shadow-l-white"
+        class=" bg-zinc-100 dark:bg-zinc-900 fixed z-20 px-1 right-0 top-2.5 flex items-center shadow-l-white"
         @click="isOpenPopup = !isOpenPopup"
       >
         <m-svg-icon class=" h-4 w-4" name="hamburger"> </m-svg-icon>
@@ -29,7 +29,7 @@
       ></li>
     </ul>
     <m-popup v-model:isOpen="isOpenPopup">
-      <Menu :categorys="data" @onItemClick="onItemClick" />
+      <Menu :categories="$store.getters.getCategories" @onItemClick="onItemClick" />
     </m-popup>
   </div>
 </template>
@@ -38,13 +38,6 @@
 import { onBeforeUpdate, ref, watch } from 'vue'
 import { useScroll } from '@vueuse/core'
 import Menu from '@/views/main/components/menu/index.vue'
-
-defineProps({
-  data: {
-    type: Array,
-    required: true,
-  }
-})
 
 const isOpenPopup = ref(false)
 const currentCategoryIndex = ref(0)

@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <HeaderVue></HeaderVue>
-    <MainVue></MainVue>
-    <FloatingVue></FloatingVue>
+  <div class=" h-screen">
+    <HeaderVue class=" h-header" />
+    <div class=" h-main">
+      <router-view></router-view>
+    </div>
+    <FloatingVue />
   </div>
 </template>
 
 <script setup>
 import FloatingVue from './components/floating.vue'
-import MainVue from './components/main.vue'
-import HeaderVue from './components/header.vue';
+import HeaderVue from './components/header.vue'
 </script>

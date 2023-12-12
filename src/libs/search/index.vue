@@ -9,6 +9,8 @@
     <input 
       v-model="inputValue"
       @focus="onFocusHandler"
+      @blur="onBlurHandler"
+      @keyup.enter="onSearchHandler"
       type="text"
       class=" w-full rounded-full pl-7 h-[45px] bg-zinc-100 outline-none duration-500 border text-sm hover:bg-white focus:border-red-300"
       placeholder="search" />
@@ -59,29 +61,49 @@ const props = defineProps({
   }
 })
 
+defineEmits([
+  EMIT_BLUR, 
+  EMIT_CLEAR, 
+  EMIT_FOCUS, 
+  EMIT_INPUT, 
+  EMIT_SEARCH, 
+  EMIT_UPDATE_MODELVALUE]
+)
+
 // 输入文本
 const inputValue = useVModel(props, 'modelValue')
 
 // 清空文本
-
 const onClearClick = () => {
   inputValue.value = ''
+  emits(EMIT_SEARCH, inputValue.value)
+}
+
+// 触发搜索
+const onSearchHandler = () => {
+  emits(EMIT_SEARCH, inputValue.value)
 }
 
 // 监听焦点行为
-
 const isFocus = ref(false)
 const containerTarget = ref(null)
 
 const onFocusHandler =  () => {
   isFocus.value = true
+  emits(EMIT_FOCUS)
 }
 
+// 失去焦点
+const onBlurHandler = () => {
+
+}
+
+// 点击区域外隐藏 dropdown
 onClickOutside(containerTarget, () => {
   isFocus.value = false
 })
 
-defineEmits([EMIT_BLUR, EMIT_CLEAR, EMIT_FOCUS, EMIT_INPUT, EMIT_SEARCH, EMIT_UPDATE_MODELVALUE])
+
 
 </script>
 

@@ -5,8 +5,7 @@ import mobileRoutes from "./modules/mobile-routes";
 
 const router = createRouter({
   history: createWebHistory(),
-  // routes: isMobileTerminal ? mobileRoutes : pcRoutes,
-  routes: pcRoutes,
+  routes: isMobileTerminal.value? mobileRoutes : pcRoutes,
 });
 
 export default router;

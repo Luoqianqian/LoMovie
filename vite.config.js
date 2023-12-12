@@ -20,8 +20,10 @@ export default defineConfig({
   // server: {
   //   proxy: {
   //     '/api': {
-  //       target: 'https://api.imooc-front.lgdsunday.club/',
-  //       changeOrigin: true
+  //       // 后端url
+  //       target: 'http://localhost:5000',
+  //       changeOrigin: true,
+  //       rewrite: path => path.replace('/api', ''),
   //     }
   //   }
   // }
