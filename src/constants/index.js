@@ -1,5 +1,5 @@
 // category 的本地构建数据
-export const ALL_CATEGORY_ITEM = {
+export const ALL_CATAGORY_ITEM = {
   id: '1',
   name: '全部',
   value: 'All'

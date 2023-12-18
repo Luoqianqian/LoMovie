@@ -12,7 +12,7 @@
       @blur="onBlurHandler"
       @keyup.enter="onSearchHandler"
       type="text"
-      class=" w-full rounded-full pl-7 h-[45px] bg-zinc-100 outline-none duration-500 border text-sm hover:bg-white focus:border-red-300"
+      class=" w-full rounded-full pl-7 h-[45px] bg-zinc-100 outline-none duration-500 border text-sm hover:bg-white dark:focus:border-zinc-200 focus:border-red-300"
       placeholder="search" />
     <!-- 删除按钮 -->
     <m-svg-icon @click="onClearClick" v-show="inputValue" name="input-delete" class=" w-4 h-4 absolute right-14 duration-500"></m-svg-icon>
@@ -23,7 +23,7 @@
       <!-- 下拉区 -->
     <transition name="slide">
       <div 
-        class=" w-full max-h-[368px] absolute left-0 top-[56px] border border-zinc-200 z-10 rounded-lg bg-white p-2 hover:shadow-lg "
+        class=" w-full max-h-[368px] overflow-auto absolute left-0 top-[56px] border border-zinc-200 z-10 rounded-lg bg-white hover:shadow-lg "
         v-if="$slots.dropdown"
         v-show="isFocus"
       >
@@ -32,23 +32,6 @@
     </transition>
  </div>
 </template>
-
-<script>
-
-// 更新事件
-const EMIT_UPDATE_MODELVALUE = 'update:modelValue'
-// 触发搜索（点击或回车）事件
-const EMIT_SEARCH = 'search'
-// 删除所有文本事件
-const EMIT_CLEAR = 'clear'
-// 输入事件
-const EMIT_INPUT = 'input'
-// 获取焦点事件
-const EMIT_FOCUS = 'focus'
-// 失去焦点事件
-const EMIT_BLUR = 'blur'
-
-</script>
 
 <script setup>
 import { ref } from 'vue'
@@ -61,27 +44,20 @@ const props = defineProps({
   }
 })
 
-defineEmits([
-  EMIT_BLUR, 
-  EMIT_CLEAR, 
-  EMIT_FOCUS, 
-  EMIT_INPUT, 
-  EMIT_SEARCH, 
-  EMIT_UPDATE_MODELVALUE]
-)
+const emits = defineEmits(['blur', 'search', 'input', 'focus','update:modelValue', 'clear'])
 
 // 输入文本
-const inputValue = useVModel(props, 'modelValue')
+const inputValue = useVModel(props, 'modelValue', emits)
 
 // 清空文本
 const onClearClick = () => {
   inputValue.value = ''
-  emits(EMIT_SEARCH, inputValue.value)
+  emits('search', inputValue.value)
 }
 
 // 触发搜索
 const onSearchHandler = () => {
-  emits(EMIT_SEARCH, inputValue.value)
+  emits('search', inputValue.value)
 }
 
 // 监听焦点行为
@@ -90,20 +66,18 @@ const containerTarget = ref(null)
 
 const onFocusHandler =  () => {
   isFocus.value = true
-  emits(EMIT_FOCUS)
+  emits('focus')
 }
 
 // 失去焦点
 const onBlurHandler = () => {
-
+  emits('blur')
 }
 
 // 点击区域外隐藏 dropdown
 onClickOutside(containerTarget, () => {
   isFocus.value = false
 })
-
-
 
 </script>
 

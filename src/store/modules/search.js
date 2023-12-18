@@ -3,17 +3,18 @@ export default {
   state: () => ({
     histories: []
   }),
-  mutation: {
+  mutations: {
     // 添加历史记录
     addHistory(state, newHistory) {
-      const isFindIndex = state.histories.findIndex(newHistory)
+      const isFindIndex = state.histories.findIndex((item) => item === newHistory)
+      console.log(isFindIndex)
       // 如果已存在
       if(isFindIndex > -1) {
         // 删除旧历史记录
-        state.histories.splice(isExisted, 1)
+        state.histories.splice(isFindIndex, 1)
       }
       // 添加到数组首部
-      state.histories.unshift(history)
+      state.histories.unshift(newHistory)
     },
     // 删除指定历史记录
     deleteHistory(state, index) {

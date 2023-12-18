@@ -1,7 +1,7 @@
 <template>
   <div>
     <m-infinite-list
-      v-model:loading="isLoading"
+      v-model="isLoading"
       :isFinished="isFinished"
       @onLoad="getData"
     >
@@ -20,14 +20,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { getMoviesList } from '@/api/movies.js'
 import ItemVue from './item.vue'
 import { isMobileTerminal } from '@/utils/flexible.js'
+import { useStore } from 'vuex';
 
 const moviesTotal = 60
 
-const query = {
+const store = useStore()
+
+let query = {
   page: 1,
   size: 20,
   category: ''
@@ -51,13 +54,42 @@ const getData = async () => {
 
   const res = await getMoviesList(query)
   if (query.page === 1) {
-    movies.value = res
+    movies.value = res || []
   } else {
     movies.value.push(...res)
   }
+  // 如果查找的数据不够20
+  if(res.length < 20) {
+    isFinished.value = true
+  }
+  // 请求的数据
   if(movies.value.length >= moviesTotal) {
     isFinished.value = true
   }
   isLoading.value = false
 }
+
+// 修改请求参数，重新发起请求
+const resetQuery = (newQuery) => {
+  query = {...query, ...newQuery}
+  // 重置状态
+  isFinished.value = false
+  // 清空movie值，会自动触发重新加载
+  movies.value = []
+}
+
+// 监听searchText内容，触发修改请求参数
+watch(() => store.getters.searchText, (val) => {
+  resetQuery({
+    page: 1, 
+    searchText: val
+  })
+})
+// 监听currentCategory变化，触发更改请求参数
+watch(() => store.getters.currentCatagory, (currentCatagory) => {
+  resetQuery({
+    page: 1,
+    catagory: currentCatagory.value
+  })
+})
 </script>

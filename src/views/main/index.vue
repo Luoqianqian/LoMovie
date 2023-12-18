@@ -1,8 +1,8 @@
 <template>
   <div class=" h-full overflow-auto">
-    <NavigationVue />
+    <navigation-vue></navigation-vue>
     <div class=" my-3 mx-auto max-w-screen-lg">
-      <ListVue></ListVue>
+      <list-vue></list-vue>
     </div>
   </div>
 </template>

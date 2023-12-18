@@ -1,17 +1,17 @@
 export default {
   // 获取导航目录
-  getCategories: (state) => state.category.categories,
+  catagories: (state) => state.catagory.catagories,
 
   // 获取主题模式
   getThemeType: (state) => state.theme.themeType,
 
 // category选中项
-  currentCategory: (state) => state.app.currentCategory,
+  currentCatagory: (state) => state.app.currentCatagory,
  
   // category选中项下标
-  currentCategoryIndex: (state, getters) => {
-    return getters.categorys.findIndex(
-      (item) => item.id === getters.currentCategory.id
+  currentCatagoryIndex: (state, getters) => {
+    return getters.catagories.findIndex(
+      (item) => item.id === getters.currentCatagory.id
     )
   },
 

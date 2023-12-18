@@ -1,26 +1,28 @@
 <!-- 搜索历史 -->
 <template>
-  <div>
-    <div>
+  <div class=" py-1 px-2">
+    <div class=" flex items-center">
       <span>最近搜索</span>
-      <m-svg-con
-        class="w-3 h-3 ml-2 p-1cursor-pointer duration-300 rounded-sm hover:bg-zinc-100"
+      <m-svg-icon
+        class="w-4 h-4 ml-2 p-1cursor-pointer duration-300 rounded-sm hover:bg-zinc-100"
         fillClass="fill-zinc-400"
         name="delete"
         @click="onDeleteAll"
       >
-      </m-svg-con>
+      </m-svg-icon>
     </div>
-    <div>
+    <div class=" flex gap-2 mt-2">
       <div 
         v-for="(item, index) in $store.getters.histories" 
         :key="index"
         @click="onItemClick(item)"
+        class="flex items-center hover:cursor-default"
       >
           <span>{{ item }}</span>
           <m-svg-icon
             name="delete"
-            class="w-2.5 h-2.5 p-0.5 ml-1 duration-300 rounded-sm hover:bg-zinc-100"
+            fillClass="fill-zinc-400"
+            class="w-6 h-6 p-1.5 duration-300 rounded-sm hover:bg-zinc-100"
             @click="onDeleteSingle(index)"
           ></m-svg-icon>
       </div>
@@ -29,15 +31,27 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useStore } from 'vuex'
+// import { confirm } from '@/libs'
+
+const store = useStore()
+
 // 点击item触发父组件搜索事件
 const emits = defineEmits(['itemClick'])
-const onItemClick = (item) => {
-  emits('itemClick', item)
+const onItemClick = (value) => {
+  emits('itemClick', value)
 }
 // 删除所有历史记录
-const onDeleteAll = () => {}
+const onDeleteAll = () => {
+  store.commit('search/deleteAllHistory')
+  // confirm('确定清除所有历史记录吗？').then(() => {
+  //   store.commit('search/deleteAllHistory')
+  // })
+}
 
 // 删除单个历史记录
-const onDeleteSingle = () => {}
+const onDeleteSingle = (index) => {
+  store.commit('search/deleteHistory', index)
+}
 </script>

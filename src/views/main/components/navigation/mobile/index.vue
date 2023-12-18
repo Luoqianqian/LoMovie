@@ -6,11 +6,11 @@
     >
       <!-- category item -->
       <li 
-        v-for="(item, index) in $store.getters.getCategories"
+        v-for="(item, index) in $store.getters.catagories"
         :key="item.id"
         @click="onItemClick(index)"
         class=" shrink-0 px-2.5 py-1 z-10 "
-        :class="{'text-zinc-100': currentCategoryIndex === index}"
+        :class="{'text-zinc-100': $store.getters.currentCatagoryIndex === index}"
         :ref="setItemRef"
       >
       {{ item.name }}

@@ -11,5 +11,5 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 
-store.dispatch('category/useCategoriesData')
+store.dispatch('catagory/useCatagoriesData')
 </script>

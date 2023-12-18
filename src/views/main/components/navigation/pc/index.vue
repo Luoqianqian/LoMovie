@@ -17,11 +17,11 @@
         ></m-svg-icon>
       </div>
       <li 
-        v-for="(item, index) in $store.getters.getCategories" 
+        v-for="(item, index) in $store.getters.catagories" 
         :key="item.id"
-        @click="onCategoryClick(index)"
+        @click="onCatagoryClick(item)"
         class=" shrink-0 px-2.5 font-bold py-1 text-sm rounded-lg cursor-default"
-        :class="{ 'bg-zinc-200 dark:text-zinc-800': index === currentCategory}"
+        :class="{ 'bg-zinc-200 dark:text-zinc-800': index === $store.getters.currentCatagoryIndex }"
       >
         {{ item.name }}
       </li>
@@ -34,16 +34,13 @@ import { ref } from "vue"
 import { useStore } from 'vuex'
 
 const store = useStore()
-const currentCategory = ref(0)
 const isUnfold = ref(false)
 
 const triggerHandle = () => {
   isUnfold.value = !isUnfold.value
 }
 
-const onCategoryClick = (index) => {
-  currentCategory.value = index
+const onCatagoryClick = (item) => {
+  store.commit('app/changeCurrentCatagory', item)
 }
-
-
 </script>

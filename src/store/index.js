@@ -1,16 +1,16 @@
 import { createStore } from "vuex"
 import getters from "./getters.js"
-import category from './modules/category.js'
+import catagory from './modules/catagory.js'
 import app from './modules/app.js'
 import theme from "./modules/theme.js"
-import search from './modules/search'
-import user from './modules/user'
+import search from './modules/search.js'
+import user from './modules/user.js'
 import createPersistedState from 'vuex-persistedstate'
 
 const store = createStore({
   getters,
   modules: {
-    category,
+    catagory,
     theme,
     app,
     search,
@@ -19,7 +19,7 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: 'loshare',
-      paths: ['category', 'theme', 'search', 'user']
+      paths: ['catagory', 'theme', 'search', 'user']
     })
   ]
 })
